@@ -5,7 +5,9 @@
 package view;
 
 import controller.DaoCategoria;
+import java.util.List;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import model.Categoria;
 /**
  *
@@ -15,11 +17,26 @@ public class Categorias extends javax.swing.JPanel {
     
     Categoria categoria = new Categoria();
     DaoCategoria daoCategoria = new DaoCategoria();
+    DefaultTableModel modeloC = new DefaultTableModel();
+    
     /**
      * Creates new form Categorias
      */
     public Categorias() {
         initComponents();
+    }
+    
+    private void mostrarCategorias(){
+        List<Categoria> listaCategoria = daoCategoria.listarCategorias();
+        modeloC = (DefaultTableModel) tblCategoria.getModel();
+        Object[] objeto = new Object[2];
+        
+        for(int i = 0; i < listaCategoria.size(); i++){
+            objeto[0] = listaCategoria.get(i).getIdCategoria();
+            objeto[1] = listaCategoria.get(i).getNombreCategoria();
+            modeloC.addRow(objeto);
+        }
+        tblCategoria.setModel(modeloC);
     }
 
     /**
@@ -42,9 +59,9 @@ public class Categorias extends javax.swing.JPanel {
         jpanelRound2 = new modelo.JpanelRound();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCategoria = new javax.swing.JTable();
-        btnGuardar = new RSMaterialComponent.RSButtonMaterialDos();
         btnEditar = new RSMaterialComponent.RSButtonMaterialDos();
         btnBuscar = new RSMaterialComponent.RSButtonMaterialDos();
+        btnGuardar = new javax.swing.JButton();
 
         rSButtonMaterialDos4.setBackground(new java.awt.Color(255, 255, 204));
         rSButtonMaterialDos4.setForeground(new java.awt.Color(0, 0, 0));
@@ -135,17 +152,6 @@ public class Categorias extends javax.swing.JPanel {
                 .addContainerGap(26, Short.MAX_VALUE))
         );
 
-        btnGuardar.setBackground(new java.awt.Color(255, 255, 204));
-        btnGuardar.setForeground(new java.awt.Color(0, 0, 0));
-        btnGuardar.setText("Guardar");
-        btnGuardar.setForegroundText(new java.awt.Color(0, 0, 0));
-        btnGuardar.setRound(25);
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
-            }
-        });
-
         btnEditar.setBackground(new java.awt.Color(255, 255, 204));
         btnEditar.setForeground(new java.awt.Color(0, 0, 0));
         btnEditar.setText("Editar");
@@ -157,6 +163,15 @@ public class Categorias extends javax.swing.JPanel {
         btnBuscar.setText("Buscar");
         btnBuscar.setForegroundText(new java.awt.Color(0, 0, 0));
         btnBuscar.setRound(25);
+
+        btnGuardar.setBackground(new java.awt.Color(255, 255, 204));
+        btnGuardar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        btnGuardar.setText("Guardar");
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -171,8 +186,8 @@ public class Categorias extends javax.swing.JPanel {
                                 .addComponent(jpanelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(36, 36, 36)))
+                                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(41, 41, 41)))
                         .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
@@ -195,8 +210,8 @@ public class Categorias extends javax.swing.JPanel {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jpanelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -212,11 +227,13 @@ public class Categorias extends javax.swing.JPanel {
         // TODO add your handling code here:
         categoria.setNombreCategoria(txtNombre.getText());
         if(daoCategoria.insertar(categoria)){
-            JOptionPane.showMessageDialog(null, "Categoria registrada correctamente");
+            JOptionPane.showMessageDialog(null, "La categoria fue insertada correctamente");
             limpiar();
         }else{
-            JOptionPane.showMessageDialog(null, "Error, no se ha podido registrar la categoria");
+            JOptionPane.showMessageDialog(null, "Error, la categoria no pudo ser insertada");
         }
+        limpiarCategorias();
+        mostrarCategorias();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     void limpiar(){
@@ -224,11 +241,18 @@ public class Categorias extends javax.swing.JPanel {
         txtNombre.setText("");
     }
     
+    void limpiarCategorias(){
+        for (int i = 0; i < modeloC.getRowCount(); i++) {
+            modeloC.removeRow(i);
+            i = 0 - 1;
+        }
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private RSMaterialComponent.RSButtonMaterialDos btnBuscar;
     private RSMaterialComponent.RSButtonMaterialDos btnEditar;
     private RSMaterialComponent.RSButtonMaterialDos btnEliminar;
-    private RSMaterialComponent.RSButtonMaterialDos btnGuardar;
+    private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;

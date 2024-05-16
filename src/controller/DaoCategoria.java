@@ -9,6 +9,8 @@ import model.Conexion;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JOptionPane;
 import model.Categoria;
 /**
@@ -41,6 +43,29 @@ public class DaoCategoria {
             JOptionPane.showConfirmDialog(null, e);
             return false;
         }
+    }
+    
+    public List listarCategorias(){
+        List<Categoria> listaCategoria = new ArrayList<>();
+        String sql = "SELECT * FROM categorias";
+        
+                try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            resultSet = preparedStatement.executeQuery();
+            while(resultSet.next()){
+                Categoria categoria = new Categoria();
+                categoria.setIdCategoria(resultSet.getInt(1));
+                categoria.setNombreCategoria(resultSet.getString(2));
+                listaCategoria.add(categoria);
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+        }
+                
+        return listaCategoria;
     }
     
 }
