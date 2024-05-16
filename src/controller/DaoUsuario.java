@@ -23,7 +23,7 @@ public class DaoUsuario {
     
     public Usuarios login(String usuario, String contrasena){
         Usuarios us = new Usuarios();
-        String sql = "SELECT * FROM usuarios WHERE usuario = '"+usuario+"' and contrasena = aes_encrypt('"+contrasena+"', 'clave')";
+        String sql = "SELECT * FROM usuarios WHERE usuario = '"+usuario+"' and contrasena ='"+contrasena+"'";
         
         try { 
             con = cn.conectar();
