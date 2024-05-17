@@ -295,6 +295,8 @@ public class Inicio extends javax.swing.JFrame {
         // TODO add your handling code here:
         btnHome.setSelected(true);
         btnCategorias.setSelected(false);
+        btnClientes.setSelected(false);
+        
         Home h=new Home();
         h.setSize(982,740);
         h.setLocation(0,0);
@@ -312,12 +314,26 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
         // TODO add your handling code here:
+        btnCategorias.setSelected(false);
+        btnHome.setSelected(false);
+        btnClientes.setSelected(true);
+        
+        Cliente cliente = new Cliente();
+        
+        cliente.setSize(982, 740);
+        cliente.setLocation(0, 0);
+        
+        contenedor.removeAll();
+        contenedor.add(cliente,BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
     }//GEN-LAST:event_btnClientesActionPerformed
 
     private void btnCategoriasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoriasActionPerformed
         // TODO add your handling code here:
         btnCategorias.setSelected(true);
         btnHome.setSelected(false);
+        btnClientes.setSelected(false);
         
         Categorias c=new Categorias();
         c.setSize(982,740);

@@ -161,7 +161,7 @@ public class Categorias extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(153, 255, 153));
+        btnEditar.setBackground(new java.awt.Color(255, 255, 204));
         btnEditar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -248,6 +248,7 @@ public class Categorias extends javax.swing.JPanel {
         }
         limpiarCategorias();
         mostrarCategorias();
+        limpiar();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
