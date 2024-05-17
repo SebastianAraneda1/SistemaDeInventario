@@ -49,7 +49,7 @@ public class DaoCategoria {
         List<Categoria> listaCategoria = new ArrayList<>();
         String sql = "SELECT * FROM categorias";
         
-                try {
+        try {
             
             conection = conexion.conectar();
             preparedStatement = conection.prepareStatement(sql);
@@ -79,6 +79,51 @@ public class DaoCategoria {
             int number = preparedStatement.executeUpdate();
             
             if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean eliminarCategoria(Categoria categoria){
+        String sql = "DELETE FROM categorias WHERE id = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, categoria.getIdCategoria());
+            int number = preparedStatement.executeUpdate();
+            
+            if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean buscarCategoria(Categoria categoria){
+        String sql = "SELECT * FROM categorias WHERE id = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, categoria.getIdCategoria());
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                categoria.setIdCategoria(resultSet.getInt(1));
+                categoria.setNombreCategoria(resultSet.getString(2));
                 return true;
             }else{
                 return false;

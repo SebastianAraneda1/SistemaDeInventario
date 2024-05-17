@@ -24,6 +24,7 @@ public class Categorias extends javax.swing.JPanel {
      */
     public Categorias() {
         initComponents();
+        mostrarCategorias();
     }
     
     private void mostrarCategorias(){
@@ -160,7 +161,7 @@ public class Categorias extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setBackground(new java.awt.Color(255, 255, 204));
+        btnEditar.setBackground(new java.awt.Color(153, 255, 153));
         btnEditar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
@@ -169,7 +170,7 @@ public class Categorias extends javax.swing.JPanel {
             }
         });
 
-        btnEliminar.setBackground(new java.awt.Color(255, 255, 204));
+        btnEliminar.setBackground(new java.awt.Color(255, 102, 102));
         btnEliminar.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
@@ -252,25 +253,47 @@ public class Categorias extends javax.swing.JPanel {
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
        int fila = tblCategoria.getSelectedRow();
-       if(fila == -1){
+       if(fila == -1 && txtId.getText().isBlank()){
            JOptionPane.showMessageDialog(null, "Seleccione categoria a editar");
        }else{
            categoria.setIdCategoria(Integer.parseInt(txtId.getText()));
            categoria.setNombreCategoria(txtNombre.getText());
            if(daoCategoria.editarCategoria(categoria)){
-               JOptionPane.showMessageDialog(null, "Categoria editada correctamente");
-               limpiarCategorias();
-               mostrarCategorias();
+                JOptionPane.showMessageDialog(null, "Categoria editada correctamente");
+                limpiarCategorias();
+                mostrarCategorias();
+                limpiar();
            }
        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         // TODO add your handling code here:
+        if (!txtId.getText().isEmpty()) {
+            int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea eliminar la categoria?", "Advertencia", 2);
+            if(confirmar == 0){
+                categoria.setIdCategoria(Integer.parseInt(txtId.getText()));
+                daoCategoria.eliminarCategoria(categoria);
+                limpiarCategorias();
+                mostrarCategorias();
+                limpiar();
+                JOptionPane.showMessageDialog(null, "Categoria eliminada correctamente");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione una categoria");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
+        categoria.setIdCategoria(Integer.parseInt(txtId.getText()));
+        if(daoCategoria.buscarCategoria(categoria)){
+            txtId.setText(categoria.getIdCategoria() + "");
+            txtNombre.setText(categoria.getNombreCategoria());
+        }else{
+            JOptionPane.showMessageDialog(null, "La categoria no existe");
+            limpiar();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void tblCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCategoriaMouseClicked
