@@ -79,4 +79,34 @@ public class DaoCliente {
         return listaClientes;
     }
     
+        public boolean editarCategoria(Clientes cliente){
+        String sql = "UPDATE cliente SET nombre = ?, apellido = ?, documento = ?, direccion = ?, telefono = ?, correo = ? WHERE id = ?";
+        try {
+            
+            conection = conexion.conectar();
+            
+            preparedStatement = conection.prepareStatement(sql);
+            
+            preparedStatement.setString(1, cliente.getNombre());
+            preparedStatement.setString(2, cliente.getApellido());
+            preparedStatement.setString(3, cliente.getDocumento());
+            preparedStatement.setString(4, cliente.getDireccion());
+            preparedStatement.setString(5, cliente.getTelefono());
+            preparedStatement.setString(6, cliente.getCorreo());
+            preparedStatement.setInt(7, cliente.getId_cliente());
+            
+            int number = preparedStatement.executeUpdate();
+            
+            if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
 }
