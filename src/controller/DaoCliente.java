@@ -79,14 +79,14 @@ public class DaoCliente {
         return listaClientes;
     }
     
-        public boolean editarCategoria(Clientes cliente){
+    public boolean editarCliente(Clientes cliente){
         String sql = "UPDATE cliente SET nombre = ?, apellido = ?, documento = ?, direccion = ?, telefono = ?, correo = ? WHERE id = ?";
         try {
-            
+
             conection = conexion.conectar();
-            
+
             preparedStatement = conection.prepareStatement(sql);
-            
+
             preparedStatement.setString(1, cliente.getNombre());
             preparedStatement.setString(2, cliente.getApellido());
             preparedStatement.setString(3, cliente.getDocumento());
@@ -94,10 +94,60 @@ public class DaoCliente {
             preparedStatement.setString(5, cliente.getTelefono());
             preparedStatement.setString(6, cliente.getCorreo());
             preparedStatement.setInt(7, cliente.getId_cliente());
-            
+
             int number = preparedStatement.executeUpdate();
-            
+
             if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean eliminarCliente(Clientes clientes){
+        String sql = "DELETE FROM cliente WHERE id = ?";
+        try {
+
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, clientes.getId_cliente());
+            int number = preparedStatement.executeUpdate();
+
+            if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean buscarCliente(Clientes clientes){
+        String sql = "SELECT * FROM cliente WHERE documento = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setString(1, clientes.getDocumento());
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                clientes.setId_cliente(resultSet.getInt(1));
+                clientes.setNombre(resultSet.getString(2));
+                clientes.setApellido(resultSet.getString(3));
+                clientes.setDocumento(resultSet.getString(4));
+                clientes.setDireccion(resultSet.getString(5));
+                clientes.setTelefono(resultSet.getString(6));
+                clientes.setCorreo(resultSet.getString(7));
                 return true;
             }else{
                 return false;

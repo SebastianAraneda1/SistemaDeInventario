@@ -128,6 +128,11 @@ public class Cliente extends javax.swing.JPanel {
         btnBuscar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnBuscar.setForeground(new java.awt.Color(0, 0, 0));
         btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpanelRound2Layout = new javax.swing.GroupLayout(jpanelRound2);
         jpanelRound2.setLayout(jpanelRound2Layout);
@@ -264,6 +269,11 @@ public class Cliente extends javax.swing.JPanel {
         btnEliminar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
         btnEliminar.setForeground(new java.awt.Color(0, 0, 0));
         btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jpanelRound1Layout = new javax.swing.GroupLayout(jpanelRound1);
         jpanelRound1.setLayout(jpanelRound1Layout);
@@ -336,7 +346,7 @@ public class Cliente extends javax.swing.JPanel {
            clientes.setTelefono(txtTelefono.getText());
            clientes.setCorreo(txtCorreo.getText());
            
-           if(daoCliente.editarCategoria(clientes)){
+           if(daoCliente.editarCliente(clientes)){
                 JOptionPane.showMessageDialog(null, "Categoria editada correctamente");
                 limpiarClientes();
                 mostrarClientes();
@@ -376,6 +386,41 @@ public class Cliente extends javax.swing.JPanel {
         txtTelefono.setText(tblClientes.getValueAt(fila, 5).toString());
         txtCorreo.setText(tblClientes.getValueAt(fila, 6).toString());
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+        if (!txtId.getText().isEmpty()) {
+            int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el cliente?", "Advertencia", 2);
+            if(confirmar == 0){
+                clientes.setId_cliente(Integer.parseInt(txtId.getText()));
+                daoCliente.eliminarCliente(clientes);
+                limpiarClientes();
+                mostrarClientes();
+                limpiarCampos();
+                JOptionPane.showMessageDialog(null, "Cliente eliminado correctamente");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un cliente");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+                // TODO add your handling code here:
+        clientes.setDocumento(txtDocumento.getText());
+        if(daoCliente.buscarCliente(clientes)){
+            txtId.setText(clientes.getId_cliente()+ "");
+            txtNombre.setText(clientes.getNombre());
+            txtApellido.setText(clientes.getApellido());
+            txtDocumento.setText(clientes.getDocumento());
+            txtDireccion.setText(clientes.getDireccion());
+            txtTelefono.setText(clientes.getTelefono());
+            txtCorreo.setText(clientes.getCorreo());
+        }else{
+            JOptionPane.showMessageDialog(null, "El cliente no existe");
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     void limpiarCampos(){
         txtId.setText("");
