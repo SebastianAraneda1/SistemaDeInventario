@@ -3,10 +3,20 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/controller/DaoCliente.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/view/Cliente.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/view/Categorias.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/controller/DaoCategoria.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Recibimiento.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Proveedor.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/controller/DaoCliente.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/model/Proveedores.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Categorias.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Cliente.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/controller/DaoProveedor.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Inicio.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/model/Recibimientos.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/model/Clientes.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/controller/DaoCategoria.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/controller/DaoRecibimiento.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Login.java</file>
+            <file>file:/C:/Users/javie/Documents/SistemaDeInventario-main/SistemaDeInventario/src/view/Home.java</file>
         </group>
     </open-files>
 </project-private>

@@ -6,6 +6,7 @@ package view;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import model.Recibimientos;
 
 /**
  *
@@ -289,6 +290,20 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
         // TODO add your handling code here:
+        btnHome.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(false);
+        btnProveedor.setSelected(true);
+        
+        Proveedor proveedor =new Proveedor();
+        proveedor.setSize(982,740);
+        proveedor.setLocation(0,0);
+        
+        contenedor.removeAll();
+        contenedor.add(proveedor,BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
     }//GEN-LAST:event_btnProveedorActionPerformed
 
     private void btnHomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHomeActionPerformed
@@ -296,6 +311,7 @@ public class Inicio extends javax.swing.JFrame {
         btnHome.setSelected(true);
         btnCategorias.setSelected(false);
         btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(false);
         
         Home h=new Home();
         h.setSize(982,740);
@@ -310,6 +326,20 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnRecibimientoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRecibimientoActionPerformed
         // TODO add your handling code here:
+        btnCategorias.setSelected(false);
+        btnHome.setSelected(false);
+        btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(true);
+        
+        Recibimiento recibimiento = new Recibimiento();
+        
+        recibimiento.setSize(982, 740);
+        recibimiento.setLocation(0, 0);
+        
+        contenedor.removeAll();
+        contenedor.add(recibimiento,BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
     }//GEN-LAST:event_btnRecibimientoActionPerformed
 
     private void btnClientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnClientesActionPerformed
@@ -317,6 +347,7 @@ public class Inicio extends javax.swing.JFrame {
         btnCategorias.setSelected(false);
         btnHome.setSelected(false);
         btnClientes.setSelected(true);
+        btnRecibimiento.setSelected(false);
         
         Cliente cliente = new Cliente();
         
@@ -334,6 +365,7 @@ public class Inicio extends javax.swing.JFrame {
         btnCategorias.setSelected(true);
         btnHome.setSelected(false);
         btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(false);
         
         Categorias c=new Categorias();
         c.setSize(982,740);
