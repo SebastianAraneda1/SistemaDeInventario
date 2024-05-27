@@ -286,6 +286,21 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
         // TODO add your handling code here:
+        btnHome.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnUsuarios.setSelected(true);
+        
+        vistaUsuario vwUsuario =new vistaUsuario();
+        vwUsuario.setSize(982,740);
+        vwUsuario.setLocation(0,0);
+        
+        contenedor.removeAll();
+        contenedor.add(vwUsuario,BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
     }//GEN-LAST:event_btnUsuariosActionPerformed
 
     private void btnProveedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProveedorActionPerformed
@@ -294,6 +309,7 @@ public class Inicio extends javax.swing.JFrame {
         btnCategorias.setSelected(false);
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(false);
+        btnUsuarios.setSelected(false);
         btnProveedor.setSelected(true);
         
         Proveedor proveedor =new Proveedor();
@@ -312,6 +328,7 @@ public class Inicio extends javax.swing.JFrame {
         btnCategorias.setSelected(false);
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(false);
+        btnUsuarios.setSelected(false);
         
         Home h=new Home();
         h.setSize(982,740);
@@ -330,6 +347,7 @@ public class Inicio extends javax.swing.JFrame {
         btnHome.setSelected(false);
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(true);
+        btnUsuarios.setSelected(false);
         
         Recibimiento recibimiento = new Recibimiento();
         
@@ -348,6 +366,7 @@ public class Inicio extends javax.swing.JFrame {
         btnHome.setSelected(false);
         btnClientes.setSelected(true);
         btnRecibimiento.setSelected(false);
+        btnUsuarios.setSelected(false);
         
         Cliente cliente = new Cliente();
         
@@ -366,6 +385,7 @@ public class Inicio extends javax.swing.JFrame {
         btnHome.setSelected(false);
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(false);
+        btnUsuarios.setSelected(false);
         
         Categorias c=new Categorias();
         c.setSize(982,740);

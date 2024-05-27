@@ -207,8 +207,8 @@ public class SearchData extends javax.swing.JFrame {
         Recibimiento.txtIdcategoria.setText(txtId.getText());
         Recibimiento.txtcategoria.setText(txtNombre.getText());
         } else {
-            Recibimiento.txtIdproveedor.setText(txtId.getText());
-        Recibimiento.txtproveedor.setText(txtNombre.getText());
+            Recibimiento.txtIdcategoria.setText(txtId.getText());
+        Recibimiento.txtcategoria.setText(txtNombre.getText());
         }
         dispose();
     }//GEN-LAST:event_btnEnviarActionPerformed
