@@ -273,6 +273,8 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
+        Login login = new Login();
+        login.setVisible(true);
         dispose();
     }//GEN-LAST:event_btnSalirActionPerformed
 

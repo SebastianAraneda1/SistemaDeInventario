@@ -3,12 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/controller/DaoUsuario.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/controller/DaoCliente.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/view/Inicio.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/model/Usuarios.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/view/Cliente.java</file>
-            <file>file:/C:/Users/sebas/OneDrive/Documentos/NetBeansProjects/SistemaDeInventario/src/view/vistaUsuario.java</file>
+            <file>file:/C:/Users/sebas/Documents/NetBeansProjects/SistemaDeInventario/src/view/Recibimiento.java</file>
+            <file>file:/C:/Users/sebas/Documents/NetBeansProjects/SistemaDeInventario/src/view/Cliente.java</file>
         </group>
     </open-files>
 </project-private>

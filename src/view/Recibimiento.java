@@ -4,6 +4,8 @@
  */
 package view;
 
+import controller.DaoCategoria;
+import controller.DaoProveedor;
 import controller.DaoRecibimiento;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -11,17 +13,25 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.Recibimientos;
 import java.sql.Date;
+import model.Categoria;
+import model.Proveedores;
 
 public class Recibimiento extends javax.swing.JPanel {
     
-    Recibimientos recibimiento = new Recibimientos();
+    Recibimientos recibimiento = new Recibimientos();   
+    Categoria categoria = new Categoria();
+    Proveedores proveedores = new Proveedores();
     DaoRecibimiento daoRecibimiento = new DaoRecibimiento();
+    DaoCategoria daoCategoria = new DaoCategoria();
+    DaoProveedor daoProveedor = new DaoProveedor();
+    DefaultTableModel modeloRecibo = new DefaultTableModel();
 
     /**
      * Creates new form Recibimient
      */
     public Recibimiento() {
         initComponents();
+        mostrarRecibos();
     }
 
     /**
@@ -64,13 +74,13 @@ public class Recibimiento extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         txtIdproveedor = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txtproveedor = new javax.swing.JTextField();
+        txtProveedor = new javax.swing.JTextField();
         btnBuscarproveedor = new javax.swing.JButton();
         btnBuscar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
         btnEditar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabla = new javax.swing.JTable();
+        tblRecibos = new javax.swing.JTable();
 
         setBackground(new java.awt.Color(137, 175, 182));
         setPreferredSize(new java.awt.Dimension(982, 740));
@@ -103,6 +113,12 @@ public class Recibimiento extends javax.swing.JPanel {
         jLabel6.setText("Precio Recibido ");
 
         jLabel7.setText("Precio Venta");
+
+        txtStock.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtStockKeyReleased(evt);
+            }
+        });
 
         txtprecioR.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
@@ -324,7 +340,7 @@ public class Recibimiento extends javax.swing.JPanel {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelRound5Layout.createSequentialGroup()
                         .addComponent(jLabel15)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(34, 34, 34))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelRound5Layout.createSequentialGroup()
                         .addComponent(btnBuscarproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -342,7 +358,7 @@ public class Recibimiento extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(jpanelRound5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel15)
-                    .addComponent(txtproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscarproveedor, javax.swing.GroupLayout.PREFERRED_SIZE, 19, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(12, 12, 12))
@@ -378,18 +394,23 @@ public class Recibimiento extends javax.swing.JPanel {
             }
         });
 
-        tabla.setModel(new javax.swing.table.DefaultTableModel(
+        tblRecibos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "ID", "Producto", "Stock", "ID_Categoria", "Fecha", "ID_Proveedor", "Precio Recibimiento", "Precio Venta", "Total"
             }
         ));
-        jScrollPane1.setViewportView(tabla);
+        tblRecibos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblRecibosMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblRecibos);
 
         javax.swing.GroupLayout jpanelRound1Layout = new javax.swing.GroupLayout(jpanelRound1);
         jpanelRound1.setLayout(jpanelRound1Layout);
@@ -403,23 +424,23 @@ public class Recibimiento extends javax.swing.JPanel {
                     .addGroup(jpanelRound1Layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jpanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 759, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jpanelRound1Layout.createSequentialGroup()
-                                .addGroup(jpanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jpanelRound1Layout.createSequentialGroup()
-                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(27, 27, 27)
-                                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(31, 31, 31)
-                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(40, 40, 40))
-                                    .addGroup(jpanelRound1Layout.createSequentialGroup()
-                                        .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
-                                .addGroup(jpanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))))))
-                .addContainerGap(69, Short.MAX_VALUE))
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(27, 27, 27)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(31, 31, 31)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(40, 40, 40))
+                            .addGroup(jpanelRound1Layout.createSequentialGroup()
+                                .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 522, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)))
+                        .addGroup(jpanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                    .addGroup(jpanelRound1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 814, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
         jpanelRound1Layout.setVerticalGroup(
             jpanelRound1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -439,8 +460,8 @@ public class Recibimiento extends javax.swing.JPanel {
                         .addComponent(jpanelRound4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jpanelRound5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 345, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 339, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -451,7 +472,7 @@ public class Recibimiento extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addComponent(jpanelRound1, javax.swing.GroupLayout.PREFERRED_SIZE, 834, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(132, Short.MAX_VALUE))
+                .addContainerGap(114, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -462,6 +483,27 @@ public class Recibimiento extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void mostrarRecibos(){
+        List<Recibimientos> listaRecibos = daoRecibimiento.listarRecibos();
+        modeloRecibo = (DefaultTableModel) tblRecibos.getModel();
+        Object[] objeto = new Object[9];
+        
+        for(int i = 0; i < listaRecibos.size(); i++){
+            objeto[0] = listaRecibos.get(i).getId_recibimiento();
+            objeto[1] = listaRecibos.get(i).getNombre_producto();
+            objeto[2] = listaRecibos.get(i).getStock();
+            objeto[3] = listaRecibos.get(i).getId_categoria();
+            objeto[4] = listaRecibos.get(i).getFecha();
+            objeto[5] = listaRecibos.get(i).getId_proveedor();
+            objeto[6] = listaRecibos.get(i).getPrecio_recibimiento();
+            objeto[7] = listaRecibos.get(i).getPrecio_venta();
+            objeto[8] = listaRecibos.get(i).getTotal();
+            
+            modeloRecibo.addRow(objeto);
+        }
+        tblRecibos.setModel(modeloRecibo);
+    }
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // TODO add your handling code here:
         
@@ -483,9 +525,9 @@ public class Recibimiento extends javax.swing.JPanel {
 
         if(daoRecibimiento.insertar(recibimiento)){
             JOptionPane.showMessageDialog(null, "El articulo ha sido registrado correctamente");
-            //limpiarCampos();
-            //limpiarClientes();
-            //mostrarClientes();
+            limpiarCampos();
+            limpiarRecibos();
+            mostrarRecibos();
         }else{
             JOptionPane.showMessageDialog(null, "Error, el articulo no se ha podido registrar");
         }
@@ -502,30 +544,168 @@ public class Recibimiento extends javax.swing.JPanel {
         // TODO add your handling code here:
         SearchData.Tipo = false;
         SearchData search = new SearchData();
-        search.setVisible(true);
+            search.setVisible(true);
     }//GEN-LAST:event_btnBuscarproveedorActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         // TODO add your handling code here:
-        // TODO add your handling code here:
+        recibimiento.setId_recibimiento(Integer.parseInt(txtIdrecibimiento.getText()));
+        if(daoRecibimiento.buscarRecibo(recibimiento)){
+            txtIdrecibimiento.setText(recibimiento.getId_recibimiento() + "");
+            txtNombreP.setText(recibimiento.getNombre_producto());
+            txtStock.setText(recibimiento.getStock()+"");
+            txtIdcategoria.setText(recibimiento.getId_categoria() + "");
+            txtIdproveedor.setText(recibimiento.getId_proveedor() + "");
+            txtprecioR.setText(recibimiento.getPrecio_recibimiento() + "");
+            txtprecioV.setText(recibimiento.getPrecio_venta()+ "");
+            txtTotal.setText(recibimiento.getTotal()+ "");
+                    
+        categoria.setIdCategoria(Integer.parseInt(txtIdcategoria.getText()));
+        if(daoCategoria.buscarCategoria(categoria)){
+            txtIdcategoria.setText(categoria.getIdCategoria() + "");
+            txtcategoria.setText(categoria.getNombreCategoria());
+        }else{
+            txtcategoria.setText("Error");
+            limpiarCampos();
+        }
+        
+        proveedores.setId_proveedor(Integer.parseInt(txtIdproveedor.getText()));
+        if(daoProveedor.buscarProveedor(proveedores)){
+            txtIdproveedor.setText(proveedores.getId_proveedor()+ "");
+            txtProveedor.setText(proveedores.getNombre());
+        }else{
+            txtProveedor.setText("Error");
+            limpiarCampos();
+        }
+            
+        }else{
+            JOptionPane.showMessageDialog(null, "El recibo no existe");
+            limpiarCampos();
+        }
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
+        if (!txtIdrecibimiento.getText().isEmpty()) {
+            int confirmar = JOptionPane.showConfirmDialog(null, "¿Desea eliminar el recibo?", "Advertencia", 2);
+            if(confirmar == 0){
+                recibimiento.setId_recibimiento(Integer.parseInt(txtIdrecibimiento.getText()));
+                daoRecibimiento.eliminarRecibo(recibimiento);
+                limpiarRecibos();
+                mostrarRecibos();
+                limpiarCampos();
+                JOptionPane.showMessageDialog(null, "Recibo eliminado correctamente");
+            }
+        }else{
+            JOptionPane.showMessageDialog(null, "Seleccione un recibo");
+        }
+        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
+        int fila = tblRecibos.getSelectedRow();
+        if(fila == -1 && txtIdrecibimiento.getText().isBlank()){
+            JOptionPane.showMessageDialog(null, "Seleccione recibo a editar");
+        }else{
+            Calendar cal;
+            int d,m,a;
+            cal = dateFecha.getCalendar();
+            d = cal.get(Calendar.DAY_OF_MONTH);
+            m = cal.get(Calendar.MONTH);
+            a = cal.get(Calendar.YEAR)-1900;
+            
+            recibimiento.setId_recibimiento(Integer.parseInt(txtIdrecibimiento.getText()));
+            recibimiento.setNombre_producto(txtNombreP.getText());
+            recibimiento.setStock(Integer.parseInt(txtStock.getText()));
+            recibimiento.setId_categoria(Integer.parseInt(txtIdcategoria.getText()));
+            recibimiento.setFecha(new Date(a,m,d));
+            recibimiento.setId_proveedor(Integer.parseInt(txtIdproveedor.getText()));
+            recibimiento.setPrecio_recibimiento(Double.parseDouble(txtprecioR.getText()));
+            recibimiento.setPrecio_venta(Double.parseDouble(txtprecioV.getText()));
+            recibimiento.setTotal(Double.parseDouble(txtTotal.getText()));
+
+            if(daoRecibimiento.editarRecibo(recibimiento)){
+                JOptionPane.showMessageDialog(null, "Recibo editado correctamente");
+                limpiarRecibos();
+                mostrarRecibos();
+                limpiarCampos();
+            }
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void txtprecioRKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtprecioRKeyReleased
         // TODO add your handling code here:
         double cantidad, precio;
-        cantidad = Double.parseDouble(txtStock.getText());
-        precio = Double.parseDouble(txtStock.getText());
-        txtTotal.setText(cantidad*precio+"");
+        if(!txtStock.getText().isEmpty()){
+            cantidad = Double.parseDouble(txtStock.getText());
+            precio = Double.parseDouble(txtprecioR.getText());
+            txtTotal.setText(cantidad*precio+"");
+        }else{
+            
+        }
     }//GEN-LAST:event_txtprecioRKeyReleased
 
+    private void tblRecibosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRecibosMouseClicked
+        // TODO add your handling code here:
+        int fila = tblRecibos.getSelectedRow();
+        txtIdrecibimiento.setText(tblRecibos.getValueAt(fila, 0).toString());
+        txtNombreP.setText(tblRecibos.getValueAt(fila, 1).toString());
+        txtStock.setText(tblRecibos.getValueAt(fila, 2).toString());
+        txtIdcategoria.setText(tblRecibos.getValueAt(fila, 3).toString());
+        dateFecha.setDate(Date.valueOf(tblRecibos.getValueAt(fila, 4).toString()));
+        txtIdproveedor.setText(tblRecibos.getValueAt(fila, 5).toString());
+        txtprecioR.setText(tblRecibos.getValueAt(fila, 6).toString());
+        txtprecioV.setText(tblRecibos.getValueAt(fila, 7).toString());
+        txtTotal.setText(tblRecibos.getValueAt(fila, 8).toString());
+        
+        categoria.setIdCategoria(Integer.parseInt(txtIdcategoria.getText()));
+        if(daoCategoria.buscarCategoria(categoria)){
+            txtIdcategoria.setText(categoria.getIdCategoria() + "");
+            txtcategoria.setText(categoria.getNombreCategoria());
+        }else{
+            txtcategoria.setText("Error");
+            limpiarCampos();
+        }
+        
+        proveedores.setId_proveedor(Integer.parseInt(txtIdproveedor.getText()));
+        if(daoProveedor.buscarProveedor(proveedores)){
+            txtIdproveedor.setText(proveedores.getId_proveedor()+ "");
+            txtProveedor.setText(proveedores.getNombre());
+        }else{
+            txtProveedor.setText("Error");
+            limpiarCampos();
+        }
+    }//GEN-LAST:event_tblRecibosMouseClicked
+
+    private void txtStockKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtStockKeyReleased
+        // TODO add your handling code here:
+        double cantidad, precio;
+        if(!txtprecioR.getText().isEmpty()){
+            cantidad = Double.parseDouble(txtStock.getText());
+            precio = Double.parseDouble(txtprecioR.getText());
+            txtTotal.setText(cantidad*precio+"");
+        }else{
+            
+        }
+    }//GEN-LAST:event_txtStockKeyReleased
+
+    void limpiarCampos(){
+        txtIdrecibimiento.setText("");
+        txtNombreP.setText("");
+        txtStock.setText("");
+        txtIdcategoria.setText("");
+        txtIdproveedor.setText("");
+        txtprecioR.setText("");
+        txtprecioV.setText("");
+        txtTotal.setText("");
+    }
+    
+    void limpiarRecibos(){
+        for (int i = 0; i < modeloRecibo.getRowCount(); i++) {
+            modeloRecibo.removeRow(i);
+            i = 0 - 1;
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
@@ -555,16 +735,16 @@ public class Recibimiento extends javax.swing.JPanel {
     private modelo.JpanelRound jpanelRound3;
     private modelo.JpanelRound jpanelRound4;
     private modelo.JpanelRound jpanelRound5;
-    private javax.swing.JTable tabla;
+    private javax.swing.JTable tblRecibos;
     public static transient javax.swing.JTextField txtIdcategoria;
-    private javax.swing.JTextField txtIdproveedor;
+    public static javax.swing.JTextField txtIdproveedor;
     private javax.swing.JTextField txtIdrecibimiento;
     private javax.swing.JTextField txtNombreP;
+    public static javax.swing.JTextField txtProveedor;
     private javax.swing.JTextField txtStock;
     private javax.swing.JTextField txtTotal;
     public static javax.swing.JTextField txtcategoria;
     private javax.swing.JTextField txtprecioR;
     private javax.swing.JTextField txtprecioV;
-    private javax.swing.JTextField txtproveedor;
     // End of variables declaration//GEN-END:variables
 }

@@ -203,12 +203,12 @@ public class SearchData extends javax.swing.JFrame {
     private void btnEnviarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEnviarActionPerformed
         // TODO add your handling code here:
         // TODO add your handling code here:
-        if (Tipo = true) {
-        Recibimiento.txtIdcategoria.setText(txtId.getText());
-        Recibimiento.txtcategoria.setText(txtNombre.getText());
-        } else {
+        if (Tipo == true) {
             Recibimiento.txtIdcategoria.setText(txtId.getText());
-        Recibimiento.txtcategoria.setText(txtNombre.getText());
+            Recibimiento.txtcategoria.setText(txtNombre.getText());
+        } else if (Tipo == false) {
+            Recibimiento.txtIdproveedor.setText(txtId.getText());
+            Recibimiento.txtProveedor.setText(txtNombre.getText());
         }
         dispose();
     }//GEN-LAST:event_btnEnviarActionPerformed

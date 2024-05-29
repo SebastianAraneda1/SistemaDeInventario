@@ -85,4 +85,35 @@ public class DaoProveedor {
                 
         return listaProveedor;
     }
+        
+    public boolean buscarProveedor(Proveedores proveedores){
+        String sql = "SELECT * FROM proveedor WHERE id = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, proveedores.getId_proveedor());
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                proveedores.setId_proveedor(resultSet.getInt(1));
+                proveedores.setNombre(resultSet.getString(2));
+                proveedores.setApellido(resultSet.getString(3));
+                proveedores.setDireccion(resultSet.getString(4));
+                proveedores.setTelefono(resultSet.getString(5));
+                proveedores.setCorreo(resultSet.getString(6));
+                proveedores.setDocumento(resultSet.getString(7));
+                proveedores.setRsocial(resultSet.getString(8));
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+        
 }
