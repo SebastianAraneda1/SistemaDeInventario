@@ -115,5 +115,87 @@ public class DaoProveedor {
             return false;
         }
     }
+    
+     public boolean editarProveedor(Proveedores proveedor){
+        String sql = "UPDATE proveedor SET nombre = ?, apellido = ?, direccion = ?, telefono = ?, correo = ?, documento = ?, Rsocial = ? WHERE id_proveedor = ?";
+        try {
+
+            conection = conexion.conectar();
+
+            preparedStatement = conection.prepareStatement(sql);
+
+            preparedStatement.setString(1, proveedor.getNombre());
+            preparedStatement.setString(2, proveedor.getApellido());
+            preparedStatement.setString(3, proveedor.getDireccion());
+            preparedStatement.setString(4, proveedor.getTelefono());
+            preparedStatement.setString(5, proveedor.getCorreo());
+            preparedStatement.setString(6, proveedor.getDocumento());
+            preparedStatement.setString(7, proveedor.getRsocial());
+            preparedStatement.setInt(8, proveedor.getId_proveedor());
+
+            int number = preparedStatement.executeUpdate();
+
+            if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean eliminarProveedor(Proveedores proveedor){
+        String sql = "DELETE FROM proveedor WHERE id_proveedor = ?";
+        try {
+
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, proveedor.getId_proveedor());
+            int number = preparedStatement.executeUpdate();
+
+            if(number != 0){
+                return true;
+            }else{
+                return false;
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
+    public boolean buscarDocumento(Proveedores proveedores){
+        String sql = "SELECT * FROM proveedor WHERE documento = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setString(1, proveedores.getDocumento());
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                proveedores.setId_proveedor(resultSet.getInt(1));
+                proveedores.setNombre(resultSet.getString(2));
+                proveedores.setApellido(resultSet.getString(3));
+                proveedores.setDireccion(resultSet.getString(4));
+                proveedores.setTelefono(resultSet.getString(5));
+                proveedores.setCorreo(resultSet.getString(6));
+                proveedores.setDocumento(resultSet.getString(7));
+                proveedores.setRsocial(resultSet.getString(8));
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
         
 }

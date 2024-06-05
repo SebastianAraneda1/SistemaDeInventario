@@ -56,6 +56,7 @@ public class Inicio extends javax.swing.JFrame {
         btnAcercaDe = new RSMaterialComponent.RSButtonMaterialIconDos();
         btnSalir = new RSMaterialComponent.RSButtonMaterialIconDos();
         jSeparator2 = new javax.swing.JSeparator();
+        btnContratos = new RSMaterialComponent.RSButtonMaterialIconDos();
         contenedor = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -98,7 +99,7 @@ public class Inicio extends javax.swing.JFrame {
         });
 
         btnRecibimiento.setBackground(new java.awt.Color(137, 175, 182));
-        btnRecibimiento.setText("RECIBIMIENTO");
+        btnRecibimiento.setText("RECIBOS");
         btnRecibimiento.setBackgroundHover(new java.awt.Color(86, 110, 114));
         btnRecibimiento.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.KEYBOARD_ARROW_DOWN);
         btnRecibimiento.addActionListener(new java.awt.event.ActionListener() {
@@ -167,6 +168,16 @@ public class Inicio extends javax.swing.JFrame {
             }
         });
 
+        btnContratos.setBackground(new java.awt.Color(137, 175, 182));
+        btnContratos.setText("CONTRATOS");
+        btnContratos.setBackgroundHover(new java.awt.Color(86, 110, 114));
+        btnContratos.setIcons(rojeru_san.efectos.ValoresEnum.ICONS.FOLDER_SHARED);
+        btnContratos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnContratosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jpanelRound2Layout = new javax.swing.GroupLayout(jpanelRound2);
         jpanelRound2.setLayout(jpanelRound2Layout);
         jpanelRound2Layout.setHorizontalGroup(
@@ -180,22 +191,22 @@ public class Inicio extends javax.swing.JFrame {
                             .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnCategorias, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnClientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jpanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelRound2Layout.createSequentialGroup()
-                                    .addComponent(jLabel1)
-                                    .addGap(51, 51, 51))
-                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelRound2Layout.createSequentialGroup()
-                                    .addGroup(jpanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnRecibimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnAcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGap(19, 19, 19)))))
+                            .addGroup(jpanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(btnProveedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnRecibimiento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(19, 19, 19))
                     .addGroup(jpanelRound2Layout.createSequentialGroup()
                         .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 227, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 9, Short.MAX_VALUE))))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jpanelRound2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addGap(62, 62, 62))
         );
         jpanelRound2Layout.setVerticalGroup(
             jpanelRound2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -216,13 +227,15 @@ public class Inicio extends javax.swing.JFrame {
                 .addComponent(btnSalidas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnUsuarios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(5, 5, 5)
+                .addComponent(btnContratos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnAcercaDe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(125, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         contenedor.setBackground(new java.awt.Color(255, 255, 255));
@@ -284,6 +297,22 @@ public class Inicio extends javax.swing.JFrame {
 
     private void btnSalidasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidasActionPerformed
         // TODO add your handling code here:
+        btnHome.setSelected(false);
+        btnCategorias.setSelected(false);
+        btnClientes.setSelected(false);
+        btnRecibimiento.setSelected(false);
+        btnUsuarios.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnSalidas.setSelected(true);
+        
+        Salida salida =new Salida();
+        salida.setSize(982,740);
+        salida.setLocation(0,0);
+        
+        contenedor.removeAll();
+        contenedor.add(salida,BorderLayout.CENTER);
+        contenedor.revalidate();
+        contenedor.repaint();
     }//GEN-LAST:event_btnSalidasActionPerformed
 
     private void btnUsuariosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUsuariosActionPerformed
@@ -313,6 +342,7 @@ public class Inicio extends javax.swing.JFrame {
         btnRecibimiento.setSelected(false);
         btnUsuarios.setSelected(false);
         btnProveedor.setSelected(true);
+        btnSalidas.setSelected(false);
         
         Proveedor proveedor =new Proveedor();
         proveedor.setSize(982,740);
@@ -331,6 +361,8 @@ public class Inicio extends javax.swing.JFrame {
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(false);
         btnUsuarios.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnSalidas.setSelected(false);
         
         Home h=new Home();
         h.setSize(982,740);
@@ -350,6 +382,8 @@ public class Inicio extends javax.swing.JFrame {
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(true);
         btnUsuarios.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnSalidas.setSelected(false);
         
         Recibimiento recibimiento = new Recibimiento();
         
@@ -369,6 +403,8 @@ public class Inicio extends javax.swing.JFrame {
         btnClientes.setSelected(true);
         btnRecibimiento.setSelected(false);
         btnUsuarios.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnSalidas.setSelected(false);
         
         Cliente cliente = new Cliente();
         
@@ -388,6 +424,8 @@ public class Inicio extends javax.swing.JFrame {
         btnClientes.setSelected(false);
         btnRecibimiento.setSelected(false);
         btnUsuarios.setSelected(false);
+        btnProveedor.setSelected(false);
+        btnSalidas.setSelected(true);
         
         Categorias c=new Categorias();
         c.setSize(982,740);
@@ -398,6 +436,10 @@ public class Inicio extends javax.swing.JFrame {
         contenedor.revalidate();
         contenedor.repaint();
     }//GEN-LAST:event_btnCategoriasActionPerformed
+
+    private void btnContratosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnContratosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnContratosActionPerformed
 
     /**
      * @param args the command line arguments
@@ -438,6 +480,7 @@ public class Inicio extends javax.swing.JFrame {
     private RSMaterialComponent.RSButtonMaterialIconDos btnAcercaDe;
     private RSMaterialComponent.RSButtonMaterialIconDos btnCategorias;
     private RSMaterialComponent.RSButtonMaterialIconDos btnClientes;
+    private RSMaterialComponent.RSButtonMaterialIconDos btnContratos;
     private RSMaterialComponent.RSButtonMaterialIconDos btnHome;
     private RSMaterialComponent.RSButtonMaterialIconDos btnProveedor;
     private RSMaterialComponent.RSButtonMaterialIconDos btnRecibimiento;
