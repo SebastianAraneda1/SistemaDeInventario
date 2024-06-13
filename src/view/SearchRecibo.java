@@ -26,7 +26,6 @@ public class SearchRecibo extends javax.swing.JFrame {
     public SearchRecibo() {
         initComponents();
         this.setLocationRelativeTo(null);
-        this.setBackground(new Color(0,0,0,0));
         mostrarRecibos();
     }
     

@@ -43,7 +43,7 @@ public class Salida extends javax.swing.JPanel {
         } else {
             int i = Integer.parseInt(numero);
             i = i+1;
-            txtnumSalida.setText("00" +1);
+            txtnumSalida.setText("00" + i);
         }
     }
 
@@ -692,7 +692,7 @@ public class Salida extends javax.swing.JPanel {
         int cantidad = Integer.parseInt(txtCantidad.getText());
         precio = Double.parseDouble(txtPrecio.getText());
         String producto = txtNombreR.getText();
-        importe = cantidad * precio * 0.19;
+        importe = cantidad * precio; //* 0.19;
         int stock = Integer.parseInt(txtStock.getText());
         ArrayList lista = new ArrayList();
         if (stock > 0 && cantidad <= stock) {

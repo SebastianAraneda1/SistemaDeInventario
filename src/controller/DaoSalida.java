@@ -51,24 +51,24 @@ public class DaoSalida {
         }
     }
     
-        public String numSalida(){
+    public String numSalida(){
         String numero = "";
         String sql = "select max(id_salidas) from salidas";
         try {
-            
+
             conection = conexion.conectar();
             preparedStatement = conection.prepareStatement(sql);
            resultSet = preparedStatement.executeQuery();
-            
+
             while(resultSet.next()){
                 numero = resultSet.getString(1);
-                
+
             }
-            
+
         } catch (Exception e) {
             JOptionPane.showConfirmDialog(null, e);
         }
-        
+
         return numero;
-        }
+    }
 }
