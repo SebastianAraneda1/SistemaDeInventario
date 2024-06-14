@@ -87,7 +87,7 @@ public class DaoProveedor {
     }
         
     public boolean buscarProveedor(Proveedores proveedores){
-        String sql = "SELECT * FROM proveedor WHERE id = ?";
+        String sql = "SELECT * FROM proveedor WHERE id_proveedor = ?";
         try {
             
             conection = conexion.conectar();

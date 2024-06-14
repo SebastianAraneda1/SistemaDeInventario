@@ -139,7 +139,7 @@ public class DaoRecibimiento {
     }
     
     public boolean buscarRecibo(Recibimientos recibimientos){
-        String sql = "SELECT * FROM recibimiento WHERE id = ?";
+        String sql = "SELECT * FROM recibimiento WHERE id_recibimiento = ?";
         try {
             
             conection = conexion.conectar();

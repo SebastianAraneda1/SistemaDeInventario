@@ -723,7 +723,7 @@ public class Salida extends javax.swing.JPanel {
             int id_recibimiento = Integer.parseInt(tablaSalidas.getValueAt(i, 1).toString());
             int cantidad = Integer.parseInt(tablaSalidas.getValueAt(i, 4).toString());
             Double importe = Double.parseDouble(tablaSalidas.getValueAt(i, 5).toString());
-            daoDS.insertar(id_salida, id_recibimiento, cantidad, 0);
+            daoDS.insertar(id_salida, id_recibimiento, cantidad, importe);
         }
     }
     
@@ -734,9 +734,9 @@ public class Salida extends javax.swing.JPanel {
             total+=fila;
             iva = total * 0.19;
             subtotal = total - iva;
-            txtTotal.setText(String.format("%.2f", total));
-            txtSubtotal.setText(String.format("%.2f", subtotal));
-            txtIva.setText(String.format("%.2f", iva));
+            txtTotal.setText(String.format("%.2f", total).replace(',', '.'));
+            txtSubtotal.setText(String.format("%.2f", subtotal).replace(',', '.'));
+            txtIva.setText(String.format("%.2f", iva).replace(',', '.'));
         }
     }
     

@@ -159,4 +159,33 @@ public class DaoCliente {
         }
     }
     
+     public boolean buscarClientePorId(Clientes clientes){
+        String sql = "SELECT * FROM cliente WHERE id_cliente = ?";
+        try {
+            
+            conection = conexion.conectar();
+            preparedStatement = conection.prepareStatement(sql);
+            preparedStatement.setInt(1, clientes.getId_cliente());
+            
+            resultSet = preparedStatement.executeQuery();
+            
+            if(resultSet.next()){
+                clientes.setId_cliente(resultSet.getInt(1));
+                clientes.setNombre(resultSet.getString(2));
+                clientes.setApellido(resultSet.getString(3));
+                clientes.setDocumento(resultSet.getString(4));
+                clientes.setDireccion(resultSet.getString(5));
+                clientes.setTelefono(resultSet.getString(6));
+                clientes.setCorreo(resultSet.getString(7));
+                return true;
+            }else{
+                return false;
+            }
+            
+        } catch (Exception e) {
+            JOptionPane.showConfirmDialog(null, e);
+            return false;
+        }
+    }
+    
 }

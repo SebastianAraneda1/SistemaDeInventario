@@ -169,12 +169,12 @@ public class DaoUsuario {
     }
     
     public boolean buscarUsuario(Usuarios usuario){
-        String sql = "SELECT * FROM cliente WHERE documento = ?";
+        String sql = "SELECT * FROM usuarios WHERE id = ?";
         try {
             
             conection = conexion.conectar();
             preparedStatement = conection.prepareStatement(sql);
-            preparedStatement.setString(1, usuario.getDocumento());
+            preparedStatement.setInt(1, usuario.getId_usuario());
             
             resultSet = preparedStatement.executeQuery();
             
