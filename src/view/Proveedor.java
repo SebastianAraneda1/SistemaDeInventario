@@ -9,6 +9,16 @@ import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import model.Proveedores;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
+import java.awt.HeadlessException;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  *
@@ -19,7 +29,10 @@ public class Proveedor extends javax.swing.JPanel {
     Proveedores proveedor = new Proveedores();
     DaoProveedor daoProveedor = new DaoProveedor();
     DefaultTableModel modeloProveedor = new DefaultTableModel();
+    java.sql.PreparedStatement preparedStatement;
+    ResultSet resultSet;
 
+    java.sql.Connection con;
 
     /**
      * Creates new form Proveedor
@@ -85,6 +98,7 @@ public class Proveedor extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         txtIdprovedoor = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        btnGenerar = new javax.swing.JButton();
 
         setBackground(new java.awt.Color(204, 255, 204));
         setPreferredSize(new java.awt.Dimension(982, 740));
@@ -303,6 +317,16 @@ public class Proveedor extends javax.swing.JPanel {
                 .addContainerGap())
         );
 
+        btnGenerar.setBackground(new java.awt.Color(255, 255, 204));
+        btnGenerar.setFont(new java.awt.Font("Arial Black", 0, 12)); // NOI18N
+        btnGenerar.setForeground(new java.awt.Color(0, 0, 0));
+        btnGenerar.setText("Generar PDF");
+        btnGenerar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGenerarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -317,14 +341,19 @@ public class Proveedor extends javax.swing.JPanel {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jpanelRound2, javax.swing.GroupLayout.PREFERRED_SIZE, 582, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(224, 224, 224)
+                                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(56, 56, 56)
+                                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGap(27, 27, 27)
-                                .addComponent(jpanelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(224, 224, 224)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(56, 56, 56)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(btnGenerar, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(jpanelRound1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))))
                 .addContainerGap(197, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -339,7 +368,8 @@ public class Proveedor extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar)
-                    .addComponent(btnEditar))
+                    .addComponent(btnEditar)
+                    .addComponent(btnGenerar))
                 .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 354, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(30, Short.MAX_VALUE))
@@ -443,6 +473,59 @@ public class Proveedor extends javax.swing.JPanel {
         
     }//GEN-LAST:event_tablaProvMouseClicked
 
+    private void btnGenerarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarActionPerformed
+        // TODO add your handling code here:
+        
+        Document documento = new Document();
+        
+        try {
+            String ruta = System.getProperty("user.home");
+            PdfWriter.getInstance(documento, new FileOutputStream(ruta + "/escritorio/SistemaDeInventario/src/reportsPDF/Reporte_Proveedores.pdf"));
+            documento.open();
+            
+            PdfPTable tabla = new PdfPTable(8);
+            tabla.addCell("id_proveedor");
+            tabla.addCell("nombre");
+            tabla.addCell("apellido");
+            tabla.addCell("direccion");
+            tabla.addCell("telefono");
+            tabla.addCell("correo");
+            tabla.addCell("documento");
+            tabla.addCell("Rsocial");
+            
+            try {
+                con = DriverManager.getConnection("jdbc:mysql://localhost/sistemainventario", "root", "");
+                String sql = "SELECT * FROM proveedor";
+                preparedStatement = con.prepareStatement(sql);
+                
+                resultSet = preparedStatement.executeQuery();
+                
+                if (resultSet.next()) {
+                    
+                    do {
+                        tabla.addCell(resultSet.getString(1));
+                        tabla.addCell(resultSet.getString(2));
+                        tabla.addCell(resultSet.getString(3));
+                        tabla.addCell(resultSet.getString(4));
+                        tabla.addCell(resultSet.getString(5));
+                        tabla.addCell(resultSet.getString(6));
+                        tabla.addCell(resultSet.getString(7));
+                        tabla.addCell(resultSet.getString(8));
+                    }while(resultSet.next());
+                    documento.add(tabla);
+                }
+                
+            } catch (DocumentException | SQLException e) {
+                
+            }
+            documento.close();
+            JOptionPane.showMessageDialog(null, "Reporte creado");
+        } catch (DocumentException | HeadlessException | FileNotFoundException e) {
+            
+        }
+        
+    }//GEN-LAST:event_btnGenerarActionPerformed
+
 
     void limpiarCampos(){
         txtIdprovedoor.setText("");
@@ -465,6 +548,7 @@ public class Proveedor extends javax.swing.JPanel {
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnEliminar;
+    private javax.swing.JButton btnGenerar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
